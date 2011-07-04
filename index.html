@@ -56,7 +56,8 @@
             Location
         </div>
         <div class="grid_9">
-            <div id="map"></div>
+            <div id="map">searching for your location ...</div>
+            <div id="images"> </div>
         </div>
         <div class="clear"></div>
         <hr />
@@ -100,7 +101,13 @@ function show_map(position) {
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
 
-    $('#map').append('Lat: ' + latitude + '<br />Lon: ' + longitude + '<br />');
+    $('#map').replaceWith('Lat: ' + latitude + '<br />Lon: ' + longitude + '<br />');
+    $.ajax({
+      url: '/hphp/twitterLocalImgs.php?geocode=' + lat + ',' + lon + ',200km&firstpage=1&lastpage=25',
+      success: function(data) {
+        $('#images').html(data);
+      }
+    });
 }
 
 $(document).ready(function() { 
