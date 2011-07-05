@@ -98,10 +98,10 @@ function get_location() {
     }
 } 
 function show_map(position) {
-    var latitude = position.coords.latitude;
-    var longitude = position.coords.longitude;
+    var lat = position.coords.latitude;
+    var lon = position.coords.longitude;
 
-    $('#map').replaceWith('Lat: ' + latitude + '<br />Lon: ' + longitude + '<br />');
+    $('#map').replaceWith('Lat: ' + lat + '<br />Lon: ' + lon + '<br />');
     $.ajax({
       url: '/hphp/twitterLocalImgs.php?geocode=' + lat + ',' + lon + ',200km&firstpage=1&lastpage=25',
       success: function(data) {
