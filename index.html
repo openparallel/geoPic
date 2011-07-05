@@ -105,7 +105,9 @@ function show_map(position) {
     $.ajax({
       url: '/hphp/twitterLocalImgs.php?geocode=' + lat + ',' + lon + ',500km&firstpage=1&lastpage=25',
       success: function(data) {
-        $('#images').html(data);
+          $.each(data, function(i,item){
+              $('#images').append('<img src="' + item.url + '" /><br />Tweet: ' + item.text);
+          });
       }
     });
 }
