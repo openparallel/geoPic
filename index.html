@@ -103,7 +103,7 @@ function show_map(position) {
 
     $('#map').replaceWith('Lat: ' + lat + '<br />Lon: ' + lon + '<br />');
     $.ajax({
-      url: '/hphp/twitterLocalImgs.php?geocode=' + lat + ',' + lon + ',200km&firstpage=1&lastpage=25',
+      url: '/hphp/twitterLocalImgs.php?geocode=' + lat + ',' + lon + ',500km&firstpage=1&lastpage=25',
       success: function(data) {
         $('#images').html(data);
       }
