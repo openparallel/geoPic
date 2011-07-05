@@ -103,9 +103,16 @@ function show_map(position) {
 
     $('#map').replaceWith('Lat: ' + lat + '<br />Lon: ' + lon + '<br />');
     $.ajax({
-      url: '/hphp/twitterLocalImgs.php?geocode=' + lat + ',' + lon + ',200km&firstpage=1&lastpage=25',
+      url: '/hphp/twitterLocalImgs.php?geocode=' + lat + ',' + lon + ',500km&firstpage=1&lastpage=25',
       success: function(data) {
-        $('#images').html(data);
+        //$('#images').html(data);
+        if(data.isArray){
+        data.forEach(function(i,item){
+              $('#images').append('<img src="' + item.url + '" /><br />Tweet: ' + item.text);
+          });
+        } else {
+              $('#images').append('<p>no images found :(</p>');
+        }
       }
     });
 }
@@ -119,10 +126,10 @@ $(document).ready(function() {
 
 <!-- mathiasbynens.be/notes/async-analytics-snippet Change UA-XXXXX-X to be your site's ID -->
 <script>
-var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview'],['_trackPageLoadTime']];
-(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
- g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
- s.parentNode.insertBefore(g,s)}(document,'script'));
+//var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview'],['_trackPageLoadTime']];
+//(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
+// g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+// s.parentNode.insertBefore(g,s)}(document,'script'));
 </script>
 
 </body>
