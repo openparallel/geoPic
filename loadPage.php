@@ -16,7 +16,7 @@ function loadPage($baseurl, $page) {
 	global $shorteners, $imageServices, $results;
 	
 	$fullurl = "$baseurl&page=$page";
-	echo "Requesting $fullurl\n";
+	fprintf(STDERR, "Requesting $fullurl\n");
 	// create a new cURL resource
 	$ch = curl_init();
 	
@@ -28,7 +28,7 @@ function loadPage($baseurl, $page) {
 	$twitterData = curl_exec($ch);
 	
 	if(!$twitterData) {
-		echo "$fullurl returned nothing\n";
+		fprintf(STDERR, "Twitter $fullurl returned nothing\n");
 		return;
 	}
 	
@@ -92,6 +92,9 @@ function loadPage($baseurl, $page) {
 			}
 			
 			$hostpart = extract_host($fullurl);
+			if($hostpart==null)
+				continue;
+				
 			// echo "hostpart now: $hostpart\n";
 			if(array_key_exists($hostpart, $imageServices)) {
 				//echo "Run $imageServices[$hostpart]\n ( $fullurl ) \n";
@@ -99,7 +102,8 @@ function loadPage($baseurl, $page) {
 				
 			if($imgurl!=NULL) {
 				//echo $imgurl . "\n";
-				$results[] = array('url' =>$imgurl, 'text'=> $twtxt, 'from_user' => $tweet->from_user, 'geo' => $tweet->geo);
+				$results[] = array('url' =>$imgurl, 'text'=> $twtxt, 'from_user' => $tweet->from_user, 
+					'lat' => $tweet->geo->{'coordinates'}[0], 'lon' => $tweet->geo->{'coordinates'}[1]);
 				}
 			}
 		}
@@ -110,7 +114,12 @@ function loadPage($baseurl, $page) {
 // Extract the hostname from a URL
 //
 function extract_host($src) {
-	preg_match("/http\:\/\/(.+?)\/(.+)/", $src, $comps);
+	preg_match("/http\:\/\/(.+?)/", $src, $comps);
+	
+	if(count($comps)<2) {
+		fprintf(STDERR, "$src did not parse to host\n");
+		return null;
+	}
 	
 	return $comps[1];
 }
