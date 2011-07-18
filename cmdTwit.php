@@ -8,10 +8,11 @@
 
 
 require_once 'loadPage.php';
+require_once 'flickrGet.php';
 
 $geocode = "-41.2884,174.784,200km";
 $firstpage = 1;
-$lastpage=100;
+$lastpage=20;
 
 $twurl = "http://search.twitter.com/search.json?geocode=$geocode&result_type=recent&rpp=100";
 
@@ -22,9 +23,12 @@ $twurl = "http://search.twitter.com/search.json?geocode=$geocode&result_type=rec
 global $results;
 $results = array();
 
+loadFlickr($geocode);
+
 for($tpg=$firstpage; $tpg<=$lastpage; $tpg++) {
 	loadPage($twurl, $tpg);
 }
+
 
 var_dump($results);
 
