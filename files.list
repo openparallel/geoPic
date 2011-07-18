@@ -1,6 +1,9 @@
+./hphp/cmdTwit.php
+./hphp/flickrGet.php
 ./hphp/imageServices.php
 ./hphp/img_instagram.php
 ./hphp/img_twitpic.php
 ./hphp/img_yfrog.php
+./hphp/loadPage.php
 ./hphp/shorteners.php
 ./hphp/twitterLocalImgs.php
